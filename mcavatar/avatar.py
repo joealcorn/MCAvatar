@@ -44,12 +44,22 @@ class Avatar(object):
 
         return StringIO(r.content)
 
+    def helmet_exists(self, helmet, bg):
+        helmet = helmet.load()
+        for y in xrange(8):
+            for x in xrange(8):
+                if not helmet[x, y] == bg:
+                    return True
+        return False
+
     def render(self):
         skin = Image.open(self.skin())
-        head = skin.copy().crop(self.box)
+        bg = skin.load()[0, 0]
 
-        if self.helmet:
-            helm = skin.crop(self.helm_box)
+        head = skin.copy().crop(self.box)
+        helm = skin.crop(self.helm_box)
+
+        if self.helmet and self.helmet_exists(helm, bg):
             head = head.convert('RGBA')
             helm = helm.convert('RGBA')
             head.paste(helm, None, helm)
