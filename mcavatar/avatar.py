@@ -28,10 +28,19 @@ class Avatar(object):
         self.url = base_url.format(username)
         self.key = '{0}_{1}'.format(size, username)
 
+        if username.lower() == 'char':
+            # Ensure the case is correct
+            # and set expiry to one week
+            self.username = 'char'
+            self.expiry = 60 * 60 * 24 * 7
+
     def skin(self):
         r = requests.get(self.url)
-        if r.status_code != 200:
-            raise Exception
+        if r.status_code == 403:
+            # Probably not the best error to raise,
+            # but at least it won't be raised by
+            # something else
+            raise NotImplementedError
 
         return StringIO(r.content)
 
