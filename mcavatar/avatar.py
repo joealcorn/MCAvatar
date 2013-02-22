@@ -18,7 +18,7 @@ base_url = 'http://s3.amazonaws.com/MinecraftSkins/{0}.png'
 class Avatar(object):
 
     box = (8, 8, 16, 16)
-    hat_box = (40, 8, 48, 16)
+    helm_box = (40, 8, 48, 16)
     expiry = config.IMG_CACHE_TIMEOUT
 
     def __init__(self, username, size=48, helmet=True):
@@ -46,7 +46,14 @@ class Avatar(object):
 
     def render(self):
         skin = Image.open(self.skin())
-        head = skin.crop(self.box)
+        head = skin.copy().crop(self.box)
+
+        if self.helmet:
+            helm = skin.crop(self.helm_box)
+            head = head.convert('RGBA')
+            helm = helm.convert('RGBA')
+            head.paste(helm, None, helm)
+
         head = head.resize(self.size)
 
         out = StringIO()
