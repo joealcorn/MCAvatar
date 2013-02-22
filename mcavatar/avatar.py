@@ -21,12 +21,12 @@ class Avatar(object):
     helm_box = (40, 8, 48, 16)
     expiry = config.IMG_CACHE_TIMEOUT
 
-    def __init__(self, username, size=48, helmet=True):
+    def __init__(self, username, size=48, helmet='h'):
         self.username = username
         self.size = (size, size)
-        self.helmet = helmet
+        self.helmet = True if helmet == 'h' else False
         self.url = base_url.format(username)
-        self.key = '{0}_{1}'.format(size, username)
+        self.key = '{0}_{1}_{2}'.format(size, helmet, username)
 
         if username.lower() == 'char':
             # Ensure the case is correct

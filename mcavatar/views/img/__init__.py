@@ -24,7 +24,7 @@ def valid_user(user):
 
 def validate(func):
     @wraps(func)
-    def wrapped(user, size=d_size, *a, **kw):
+    def wrapped(helm, user, size=d_size, *a, **kw):
         if not valid_user(user):
             user = 'char'
 
@@ -33,16 +33,20 @@ def validate(func):
         elif size < l_size:
             size = l_size
 
-        return func(user, size, *a, **kw)
+        helm = helm.lower()
+        if helm not in ('h', 'f'):
+            helm = 'h'
+
+        return func(helm, user, size, *a, **kw)
     return wrapped
 
 
-def image_response(user, size=d_size):
-    key = '{0}_{1}'.format(size, user)
+def image_response(user, size=d_size, helmet='h'):
+    key = '{0}_{1}_{2}'.format(size, helmet, user)
     img = g.redis.get(key)
     if img is None:
         try:
-            a = Avatar(user, size=size)
+            a = Avatar(user, size, helmet)
             img = a.render()
         except NotImplementedError:
             return image_response('char', size)
@@ -54,20 +58,21 @@ def image_response(user, size=d_size):
     return response
 
 
-@img.route('/a/<user>/<int:size>')
-@img.route('/a/<user>/<int:size>.png')
-@img.route('/a/<user>')
-@img.route('/a/<user>.png')
+@img.route('/<helm>/<user>/<int:size>')
+@img.route('/<helm>/<user>/<int:size>.png')
+@img.route('/<helm>/<user>')
+@img.route('/<helm>/<user>.png')
 @validate
-def avatar(user, size=d_size):
-    return image_response(user, size)
+def avatar(helm, user, size=d_size):
+    return image_response(user, size, helm)
 
 
-@img.route('/a/refresh/<user>')
+@img.route('/refresh/<user>')
 def refresh(user):
     if not valid_user(user):
         return 'bad user'
 
     keys = g.redis.keys('*_{0}'.format(user))
-    g.redis.delete(*keys)
+    if keys != []:
+        g.redis.delete(*keys)
     return 'ok'
