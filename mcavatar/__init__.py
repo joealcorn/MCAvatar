@@ -20,3 +20,8 @@ app.register_blueprint(img, subdomain='i')
 @app.before_request
 def set_db():
     g.redis = _redis
+
+
+@app.teardown_request
+def incr_requests(ex):
+    g.redis.incr('total_requests')
