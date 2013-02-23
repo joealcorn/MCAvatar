@@ -67,8 +67,8 @@ def avatar(helm, user, size=d_size):
     return image_response(user, size, helm)
 
 
-@img.route('/refresh/<user>')
-def refresh(user):
+@img.route('/update/<user>')
+def update(user):
     if not valid_user(user):
         return 'bad user'
 
