@@ -86,3 +86,11 @@ a:hover {
     border: 1px solid #555;
     margin-right: 5px;
 }
+
+@media all and (max-width: 600px) {
+
+    img, pre {
+        display: block;
+    }
+
+}
