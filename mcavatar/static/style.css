@@ -87,6 +87,11 @@ a:hover {
     margin-right: 5px;
 }
 
+.nav li {
+    list-style-type: none;
+    display: inline;
+}
+
 @media all and (max-width: 600px) {
 
     img, pre {

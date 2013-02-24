@@ -1,8 +1,19 @@
+from subprocess import check_output
+
 from redis import Redis
 from flask import Flask, g
 
+
+def get_version():
+    try:
+        return check_output('git rev-parse HEAD', shell=True)
+    except:
+        return '0'
+
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
+app.config['VERSION'] = get_version()
+
 
 _redis = Redis(
     host=app.config['REDIS_HOST'],

@@ -45,7 +45,11 @@
 
     <footer>
         <div class="inside">
-            <a href="https://github.com/buttscicles/MCAvatar">Code</a>
+            <ul class="nav">
+                <li><a href="https://github.com/buttscicles/MCAvatar/tree/{{ config.VERSION }}">{{ config.VERSION|truncate(7, killwords=True, end='') }}</a></li>
+                <li>&middot;</li>
+                <li><a href="https://github.com/buttscicles/MCAvatar">Code</a></li>
+            </ul>            
         </div>
     </footer>
 
