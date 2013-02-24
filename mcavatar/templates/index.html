@@ -35,6 +35,12 @@
             <pre>&lt;img src=&quot;{{ url_for('img.avatar', helm='h', user='buttscicles', size=80) }}&quot;&gt;</pre>
         </div>
 
+        <div class="block">
+            <h3>Updating</h3>
+            <p>Images are cached for {{ config.IMG_CACHE_TIMEOUT|time }}, but can be manually invalidated by visiting this link</p>
+            <pre>{{ url_for('img.update', user='USERNAME') }}</pre>
+        </div>
+
     </section>
 
     <footer>

@@ -25,3 +25,14 @@ def set_db():
 @app.teardown_request
 def incr_requests(ex):
     g.redis.incr('total_requests')
+
+
+@app.template_filter('time')
+def seconds_to_hrt(seconds):
+    hours = seconds / 3600
+    minutes = seconds / 60 - hours * 60
+
+    if minutes != 0:
+        return '{0}h {1}m'.format(hours, minutes)
+    else:
+        return '{0}h'.format(hours)

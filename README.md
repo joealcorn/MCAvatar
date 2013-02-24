@@ -34,3 +34,8 @@
 ![buttscicles](http://i.mc.buttscicl.es/h/buttscicles/100)
 
 `<img src="http://i.mc.buttscicl.es/h/buttscicles/100">`
+
+### Updating images
+By default images are cached for 24 hours, but if neccesary they can be updated by visiting this link
+`http://i.mc.buttscicl.es/update/USERNAME`
+
