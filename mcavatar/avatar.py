@@ -20,6 +20,7 @@ class Avatar(object):
     box = (8, 8, 16, 16)
     helm_box = (40, 8, 48, 16)
     expiry = config.IMG_CACHE_TIMEOUT
+    skin_expiry = config.SKIN_CACHE_TIMEOUT
 
     def __init__(self, username, size=48, helmet='h'):
         self.username = username
@@ -43,14 +44,19 @@ class Avatar(object):
         return False
 
     def skin(self):
-        r = requests.get(self.url)
-        if r.status_code == 403:
-            # Probably not the best error to raise,
-            # but at least it won't be raised by
-            # something else
-            raise NotImplementedError
+        key = 'skin_{0}'.format(self.username)
+        skin = redis.get(key)
+        if skin is None:
+            r = requests.get(self.url)
+            if r.status_code == 403:
+                # Probably not the best error to raise,
+                # but at least it won't be raised by
+                # something else
+                raise NotImplementedError
+            skin = r.content
 
-        return StringIO(r.content)
+        redis.setex(key, skin, self.skin_expiry)
+        return StringIO(skin)
 
     def render(self):
         skin = Image.open(self.skin())

@@ -7,8 +7,9 @@
 SERVER_NAME = 'mcavatar.dev:5000'
 
 # Number in seconds to keep images
-# alive in redis (Default = 24 hours)
+# alive in redis (Default = 24 hours, skin = 1h)
 IMG_CACHE_TIMEOUT = 60 * 60 * 24
+SKIN_CACHE_TIMEOUT = 60 * 60
 
 DEFAULT_IMG_SIZE = 64
 MAX_IMG_SIZE = 250
