@@ -74,6 +74,8 @@ class Avatar(object):
 
         out = StringIO()
         head.save(out, 'png')
+        output = out.getvalue()
+        out.close()
 
-        redis.setex(self.key, out.getvalue(), self.expiry)
-        return out.getvalue()
+        redis.setex(self.key, output, self.expiry)
+        return output
