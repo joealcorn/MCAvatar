@@ -11,8 +11,8 @@ img = Blueprint('img', __name__)
 
 username_re = re.compile('([A-Z_0-9]){2,16}', re.I)
 d_size = app.config.get('DEFAULT_IMG_SIZE', 48)
-m_size = app.config.get('MAX_IMG_SIZE', 999)
-l_size = app.config.get('LOW_IMG_SIZE', 16)
+max_size = app.config.get('MAX_IMG_SIZE', 999)
+min_size = app.config.get('MIN_IMG_SIZE', 16)
 
 
 def valid_user(user):
@@ -28,10 +28,10 @@ def validate(func):
         if not valid_user(user):
             user = 'char'
 
-        if size > m_size:
-            size = m_size
-        elif size < l_size:
-            size = l_size
+        if size > max_size:
+            size = max_size
+        elif size < min_size:
+            size = min_size
 
         helm = helm.lower()
         if helm not in ('h', 'f'):

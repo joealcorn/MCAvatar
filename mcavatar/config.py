@@ -13,7 +13,7 @@ SKIN_CACHE_TIMEOUT = 60 * 60
 
 DEFAULT_IMG_SIZE = 64
 MAX_IMG_SIZE = 250
-LOW_IMG_SIZE = 16
+MIN_IMG_SIZE = 16
 
 #===============================#
 # Redis config                  #
