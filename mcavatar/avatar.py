@@ -49,10 +49,7 @@ class Avatar(object):
         if skin is None:
             r = requests.get(self.url)
             if r.status_code == 403:
-                # Probably not the best error to raise,
-                # but at least it won't be raised by
-                # something else
-                raise NotImplementedError
+                raise Exception('Response had status code 403')
             skin = r.content
 
         redis.setex(key, skin, self.skin_expiry)

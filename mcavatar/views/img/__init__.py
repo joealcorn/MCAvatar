@@ -48,7 +48,7 @@ def image_response(user, size=d_size, helmet='h'):
         try:
             a = Avatar(user, size, helmet)
             img = a.render()
-        except NotImplementedError:
+        except:
             return image_response('char', size)
 
     response = make_response(img)
