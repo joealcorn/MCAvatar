@@ -14,6 +14,8 @@ app = Flask(__name__)
 app.config.from_pyfile('config.py')
 app.config['VERSION'] = get_version()
 
+from raven.contrib.flask import Sentry
+sentry = Sentry(app)
 
 _redis = Redis(
     host=app.config['REDIS_HOST'],

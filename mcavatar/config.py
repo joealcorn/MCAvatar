@@ -22,3 +22,10 @@ MIN_IMG_SIZE = 16
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
 REDIS_DB = 7  # Must be an integer
+
+
+#===============================#
+# Sentry config                 #
+#===============================#
+
+SENTRY_DSN = ''
